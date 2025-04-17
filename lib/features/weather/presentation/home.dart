@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:super_app/features/weather/presentation/widget/home/loading.dart';
+import 'package:super_app/core/bloc/base_page_state.dart';
+import 'package:super_app/features/weather/presentation/bloc/home/home_bloc.dart';
 
 import 'widget/home/item.dart';
 
@@ -10,9 +11,10 @@ class WeatherHomeScreen extends StatefulWidget {
   State<WeatherHomeScreen> createState() => _WeatherHomeScreenState();
 }
 
-class _WeatherHomeScreenState extends State<WeatherHomeScreen> {
+class _WeatherHomeScreenState
+    extends BasePageState<WeatherHomeScreen, HomeBloc> {
   @override
-  Widget build(BuildContext context) {
+  Widget buildPage(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [

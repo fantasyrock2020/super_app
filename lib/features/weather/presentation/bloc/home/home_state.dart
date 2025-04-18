@@ -1,33 +1,22 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../../data/model/model.dart';
 
-class HomeState {
-  final WeatherResponse? currentWeather;
-  final List<Forecast> forecasts;
-  final bool loading;
-  final double lat;
-  final double long;
+part 'home_state.freezed.dart';
+part 'home_state.g.dart';
 
-  HomeState({
-    this.currentWeather,
-    this.forecasts = const [],
-    this.loading = true,
-    this.lat = 0,
-    this.long = 0,
-  });
+@freezed
+abstract class HomeState with _$HomeState {
+  const HomeState._();
 
-  HomeState copyWith({
+  const factory HomeState({
     WeatherResponse? currentWeather,
-    List<Forecast>? forecasts,
-    bool? loading,
-    double? lat,
-    double? long,
-  }) {
-    return HomeState(
-      currentWeather: currentWeather ?? this.currentWeather,
-      forecasts: forecasts ?? this.forecasts,
-      loading: loading ?? this.loading,
-      lat: lat ?? this.lat,
-      long: long ?? this.long,
-    );
-  }
+    @Default(<Forecast>[]) List<Forecast> forecasts,
+    @Default(true) bool loading,
+    @Default(0) double lat,
+    @Default(0) double long,
+  }) = _ForecastResponse;
+
+  factory HomeState.fromJson(Map<String, dynamic> json) =>
+      _$HomeStateFromJson(json);
 }

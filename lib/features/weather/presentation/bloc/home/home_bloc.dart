@@ -15,7 +15,7 @@ export 'home_state.dart';
 
 @injectable
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc(this._repository) : super(HomeState()) {
+  HomeBloc(this._repository) : super(const HomeState()) {
     on<InitialEvent>(_onInitialEvent);
     on<ReloadEvent>(_onReload);
   }
@@ -26,18 +26,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     InitialEvent event,
     Emitter<HomeState> emit,
   ) async {
-    emit(state.copyWith(loading: true));
-    final DeviceLatLong? location = await DeviceUtil.getCurrentLatLong();
-    if (location != null) {
-      emit(state.copyWith(
-        lat: location.latitude,
-        long: location.longitude,
-      ));
-      await Future.wait([
-        _loadCurrentWeather(emit),
-        _loadForecast(emit),
-      ]);
-    }
+    emit(state.copyWith(
+      loading: true,
+      lat: event.latitude,
+      long: event.longitude,
+    ));
+    await Future.wait([
+      _loadCurrentWeather(emit),
+      _loadForecast(emit),
+    ]);
     emit(state.copyWith(loading: false));
   }
 
@@ -55,29 +52,33 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final res =
         await _repository.loadForecast(lat: state.lat, long: state.long);
     if (res != null) {
-      final List<Forecast> forcasts = <Forecast>[];
-      for (final item in res.list) {
-        final DateTime? dt = item.dt.millisecondToDateTime();
-        if (CommonUtil.isToday(dt)) {
-          continue;
-        }
-        final int index = forcasts.indexWhere(
-            (x) => x.dt.millisecondToDateTime().toDate() == dt.toDate());
-        if (index == -1) {
-          forcasts.add(item);
-          if (forcasts.length == 4) {
-            break;
-          }
+      emit(state.copyWith(forecasts: _getForecastsDaily(res.list)));
+    }
+  }
+
+  List<Forecast> _getForecastsDaily(List<Forecast> list) {
+    final List<Forecast> forcasts = <Forecast>[];
+    for (final item in list) {
+      final DateTime? dt = item.dt.millisecondToDateTime();
+      if (CommonUtil.isToday(dt)) {
+        continue;
+      }
+      final int index = forcasts.indexWhere(
+          (x) => x.dt.millisecondToDateTime().toDate() == dt.toDate());
+      if (index == -1) {
+        forcasts.add(item);
+        if (forcasts.length == 4) {
+          break;
         }
       }
-      emit(state.copyWith(forecasts: forcasts));
     }
+    return forcasts;
   }
 
   FutureOr<void> _onReload(
     ReloadEvent event,
     Emitter<HomeState> emit,
   ) {
-    add(InitialEvent());
+    add(InitialEvent(state.lat, state.long));
   }
 }

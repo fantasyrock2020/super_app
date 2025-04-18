@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/bloc/base_page_state.dart';
 import '../../../core/extensions/extensions.dart';
 
+import '../../../core/utils/utils.dart';
 import 'bloc/home/home_bloc.dart';
 import 'widget/home/error.dart';
 import 'widget/home/item.dart';
@@ -21,7 +22,14 @@ class _WeatherHomeScreenState
   @override
   void initState() {
     super.initState();
-    bloc.add(InitialEvent());
+    _onLoad();
+  }
+
+  Future<void> _onLoad() async {
+    final DeviceLatLong? location = await DeviceUtil.getCurrentLatLong();
+    if (location != null) {
+      bloc.add(InitialEvent(location.latitude, location.longitude));
+    }
   }
 
   void _onRetry() {

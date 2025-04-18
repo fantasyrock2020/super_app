@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import '../../../../../core/extensions/extensions.dart';
+
+import '../../../data/model/model.dart';
 
 class WeatherRow extends StatelessWidget {
-  final String day;
-  final String temp;
+  final Forecast forecast;
 
-  const WeatherRow({super.key, required this.day, required this.temp});
+  const WeatherRow({super.key, required this.forecast});
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +24,21 @@ class WeatherRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            day,
+            forecast.dt.millisecondToDateTime().toWeekday(),
             style: const TextStyle(
               fontSize: 16,
               color: Color(0xFF2A2A2A),
               fontWeight: FontWeight.w400,
+              height: 1.2,
             ),
           ),
           Text(
-            temp,
+            '${forecast.main.temp.kelvinToCelsius()}°C',
             style: const TextStyle(
               fontSize: 16,
               color: Color(0xFF2A2A2A),
               fontWeight: FontWeight.w400,
+              height: 1.2,
             ),
           ),
         ],

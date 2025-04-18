@@ -40,7 +40,7 @@ class WeatherErrorWidget extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(2),
                   ),
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 1,

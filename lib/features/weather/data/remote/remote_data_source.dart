@@ -1,7 +1,8 @@
-import '../data/model/forecast.dart';
-import '../data/model/weather.dart';
+import 'dart:async';
 
-abstract class WeatherRepository {
+import '../model/model.dart';
+
+abstract class WeatherRemoteDataSource {
   Future<WeatherResponse?> loadCurrentWeather({
     required double lat,
     required double long,

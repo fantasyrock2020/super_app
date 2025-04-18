@@ -2,51 +2,82 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
+import '../../../../../core/extensions/extensions.dart';
+import '../../../../../core/utils/utils.dart';
+import '../../../data/model/model.dart';
 
+import '../../../domain/repository/repository.dart';
 import 'home_event.dart';
 import 'home_state.dart';
 
+export 'home_event.dart';
+export 'home_state.dart';
+
 @injectable
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc() : super(HomeState()) {
-    on<UpdateLocation>(_onUpdateLocation);
-    on<LoadCurrentWeather>(_onLoadCurrentWeather);
-    on<LoadForecast>(_onLoadForecast);
-    on<Reload>(_onReload);
-    on<UpdateStatus>(_onUpdateStatus);
+  HomeBloc(this._repository) : super(HomeState()) {
+    on<InitialEvent>(_onInitialEvent);
+    on<ReloadEvent>(_onReload);
   }
 
-  FutureOr<void> _onUpdateLocation(
-    UpdateLocation event,
+  final WeatherRepository _repository;
+
+  FutureOr<void> _onInitialEvent(
+    InitialEvent event,
     Emitter<HomeState> emit,
-  ) {
-    emit(state.copyWith(
-      lat: event.lat,
-      long: event.long,
-    ));
+  ) async {
+    emit(state.copyWith(loading: true));
+    final DeviceLatLong? location = await DeviceUtil.getCurrentLatLong();
+    if (location != null) {
+      emit(state.copyWith(
+        lat: location.latitude,
+        long: location.longitude,
+      ));
+      await Future.wait([
+        _loadCurrentWeather(emit),
+        _loadForecast(emit),
+      ]);
+    }
+    emit(state.copyWith(loading: false));
   }
 
-  FutureOr<void> _onLoadCurrentWeather(
-    LoadCurrentWeather event,
+  Future<void> _loadCurrentWeather(
     Emitter<HomeState> emit,
-  ) {}
+  ) async {
+    final res =
+        await _repository.loadCurrentWeather(lat: state.lat, long: state.long);
+    emit(state.copyWith(currentWeather: res));
+  }
 
-  FutureOr<void> _onLoadForecast(
-    LoadForecast event,
+  Future<void> _loadForecast(
     Emitter<HomeState> emit,
-  ) {}
+  ) async {
+    final res =
+        await _repository.loadForecast(lat: state.lat, long: state.long);
+    if (res != null) {
+      final List<Forecast> forcasts = <Forecast>[];
+      for (final item in res.list) {
+        final DateTime? dt = item.dt.millisecondToDateTime();
+        if (CommonUtil.isToday(dt)) {
+          continue;
+        }
+        final int index = forcasts.indexWhere(
+            (x) => x.dt.millisecondToDateTime().toDate() == dt.toDate());
+        if (index == -1) {
+          forcasts.add(item);
+          if (forcasts.length == 4) {
+            break;
+          }
+        }
+      }
+      emit(state.copyWith(forecasts: forcasts));
+    }
+  }
 
   FutureOr<void> _onReload(
-    Reload event,
-    Emitter<HomeState> emit,
-  ) {}
-
-  FutureOr<void> _onUpdateStatus(
-    UpdateStatus event,
+    ReloadEvent event,
     Emitter<HomeState> emit,
   ) {
-    emit(state.copyWith(
-      loading: !state.loading,
-    ));
+    add(InitialEvent());
   }
 }

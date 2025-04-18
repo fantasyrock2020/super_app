@@ -1,28 +1,30 @@
+import '../../../data/model/model.dart';
+
 class HomeState {
-  final List currentWeather;
-  final List forecast;
+  final WeatherResponse? currentWeather;
+  final List<Forecast> forecasts;
   final bool loading;
   final double lat;
   final double long;
 
   HomeState({
-    this.currentWeather = const [],
-    this.forecast = const [],
-    this.loading = false,
+    this.currentWeather,
+    this.forecasts = const [],
+    this.loading = true,
     this.lat = 0,
     this.long = 0,
   });
 
   HomeState copyWith({
-    List? currentWeather,
-    List? forecast,
+    WeatherResponse? currentWeather,
+    List<Forecast>? forecasts,
     bool? loading,
     double? lat,
     double? long,
   }) {
     return HomeState(
       currentWeather: currentWeather ?? this.currentWeather,
-      forecast: forecast ?? this.forecast,
+      forecasts: forecasts ?? this.forecasts,
       loading: loading ?? this.loading,
       lat: lat ?? this.lat,
       long: long ?? this.long,

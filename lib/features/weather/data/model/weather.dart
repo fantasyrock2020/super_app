@@ -1,144 +1,102 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'weather.freezed.dart';
 part 'weather.g.dart';
 
-@JsonSerializable(explicitToJson: true)
-class WeatherResponse {
-  final Coord coord;
-  final List<Weather> weather;
-  final String base;
-  final MainWeather main;
-  final int visibility;
-  final Wind wind;
-  final Clouds clouds;
-  final int dt;
-  final Sys sys;
-  final int timezone;
-  final int id;
-  final String name;
-  final int cod;
+@freezed
+abstract class WeatherResponse with _$WeatherResponse {
+  const WeatherResponse._();
 
-  WeatherResponse({
-    required this.coord,
-    required this.weather,
-    required this.base,
-    required this.main,
-    required this.visibility,
-    required this.wind,
-    required this.clouds,
-    required this.dt,
-    required this.sys,
-    required this.timezone,
-    required this.id,
-    required this.name,
-    required this.cod,
-  });
+  const factory WeatherResponse({
+    @Default(<Weather>[]) List<Weather> weather,
+    @Default('') String base,
+    @Default(MainWeather()) MainWeather main,
+    @Default(0) int visibility,
+    @Default(Wind()) Wind wind,
+    @Default(Clouds()) Clouds clouds,
+    @Default(0) int dt,
+    @Default(Sys()) Sys sys,
+    @Default(0) int timezone,
+    @Default(0) int id,
+    @Default('') String name,
+    @Default(0) int cod,
+  }) = _WeatherResponse;
 
   factory WeatherResponse.fromJson(Map<String, dynamic> json) =>
       _$WeatherResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$WeatherResponseToJson(this);
 }
 
-@JsonSerializable()
-class Coord {
-  final double lon;
-  final double lat;
+@freezed
+abstract class Weather with _$Weather {
+  const Weather._();
 
-  Coord({required this.lon, required this.lat});
-
-  factory Coord.fromJson(Map<String, dynamic> json) => _$CoordFromJson(json);
-
-  Map<String, dynamic> toJson() => _$CoordToJson(this);
-}
-
-@JsonSerializable()
-class Weather {
-  final int id;
-  final String main;
-  final String description;
-  final String icon;
-
-  Weather(
-      {required this.id,
-      required this.main,
-      required this.description,
-      required this.icon});
+  const factory Weather({
+    @Default(0) int id,
+    @Default('') String main,
+    @Default('') String description,
+    @Default('') String icon,
+  }) = _Weather;
 
   factory Weather.fromJson(Map<String, dynamic> json) =>
       _$WeatherFromJson(json);
-
-  Map<String, dynamic> toJson() => _$WeatherToJson(this);
 }
 
-@JsonSerializable()
-class MainWeather {
-  final double temp;
-  final double feels_like;
-  final double temp_min;
-  final double temp_max;
-  final int pressure;
-  final int humidity;
-  final int sea_level;
-  final int grnd_level;
+@freezed
+abstract class MainWeather with _$MainWeather {
+  const MainWeather._();
 
-  MainWeather({
-    required this.temp,
-    required this.feels_like,
-    required this.temp_min,
-    required this.temp_max,
-    required this.pressure,
-    required this.humidity,
-    required this.sea_level,
-    required this.grnd_level,
-  });
+  const factory MainWeather({
+    @Default(0) double temp,
+    @JsonKey(name: 'feels_like') @Default(0) double feelsLike,
+    @JsonKey(name: 'temp_min') @Default(0) double tempMin,
+    @JsonKey(name: 'temp_max') @Default(0) double tempMax,
+    @Default(0) int pressure,
+    @JsonKey(name: 'sea_level') @Default(0) int seaLevel,
+    @JsonKey(name: 'grnd_level') @Default(0) int grndLevel,
+    @Default(0) int humidity,
+    @JsonKey(name: 'temp_kf') @Default(0) double tempKf,
+  }) = _MainWeather;
 
   factory MainWeather.fromJson(Map<String, dynamic> json) =>
       _$MainWeatherFromJson(json);
-
-  Map<String, dynamic> toJson() => _$MainWeatherToJson(this);
 }
 
-@JsonSerializable()
-class Wind {
-  final double speed;
-  final int deg;
+@freezed
+abstract class Wind with _$Wind {
+  const Wind._();
 
-  Wind({required this.speed, required this.deg});
+  const factory Wind({
+    @Default(0) double speed,
+    @Default(0) int deg,
+    @Default(0) double gust,
+  }) = _Wind;
 
   factory Wind.fromJson(Map<String, dynamic> json) => _$WindFromJson(json);
-
-  Map<String, dynamic> toJson() => _$WindToJson(this);
 }
 
-@JsonSerializable()
-class Clouds {
-  final int all;
+@freezed
+abstract class Clouds with _$Clouds {
+  const Clouds._();
 
-  Clouds({required this.all});
+  const factory Clouds({
+    @Default(0) int all,
+  }) = _Clouds;
 
   factory Clouds.fromJson(Map<String, dynamic> json) => _$CloudsFromJson(json);
-
-  Map<String, dynamic> toJson() => _$CloudsToJson(this);
 }
 
-@JsonSerializable()
-class Sys {
-  final int type;
-  final int id;
-  final String country;
-  final int sunrise;
-  final int sunset;
+@freezed
+abstract class Sys with _$Sys {
+  const Sys._();
 
-  Sys({
-    required this.type,
-    required this.id,
-    required this.country,
-    required this.sunrise,
-    required this.sunset,
-  });
+  const factory Sys({
+    @Default(0) int type,
+    @Default(0) int id,
+    @Default('') String country,
+    @Default(0) int sunrise,
+    @Default(0) int sunset,
+    @Default('') String pod, // pod might be optional in current weather
+  }) = _Sys;
 
   factory Sys.fromJson(Map<String, dynamic> json) => _$SysFromJson(json);
-
-  Map<String, dynamic> toJson() => _$SysToJson(this);
 }

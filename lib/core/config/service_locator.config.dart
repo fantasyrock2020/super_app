@@ -20,8 +20,8 @@ import 'package:super_app/features/weather/data/repository/repository.dart'
     as _i383;
 import 'package:super_app/features/weather/domain/repository/repository.dart'
     as _i299;
-import 'package:super_app/features/weather/presentation/bloc/home/home_bloc.dart'
-    as _i766;
+import 'package:super_app/features/weather/presentation/bloc/home/weather_home_bloc.dart'
+    as _i942;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -39,8 +39,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i152.WeatherRemoteDataSourceImpl(gh<_i631.DioClient>()));
     gh.lazySingleton<_i299.WeatherRepository>(
         () => _i383.WeatherRepositoryImpl(gh<_i292.WeatherRemoteDataSource>()));
-    gh.factory<_i766.HomeBloc>(
-        () => _i766.HomeBloc(gh<_i299.WeatherRepository>()));
+    gh.factory<_i942.WeatherHomeBloc>(
+        () => _i942.WeatherHomeBloc(gh<_i299.WeatherRepository>()));
     return this;
   }
 }

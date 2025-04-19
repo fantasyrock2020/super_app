@@ -6,7 +6,7 @@ import 'package:super_app/core/extensions/extensions.dart';
 import 'package:super_app/core/utils/utils.dart';
 import 'package:super_app/features/weather/weather.dart';
 
-import '../../helpers/mock.dart';
+import '../helpers/mock.dart';
 import '../dump/dump.dart';
 
 void main() {
@@ -31,12 +31,12 @@ void main() {
 
   group('Weather bloc test', () {
     late WeatherRepository repository;
-    late HomeBloc weatherBloc;
+    late WeatherHomeBloc weatherBloc;
 
     setUp(() {
       WidgetsFlutterBinding.ensureInitialized();
       repository = MockWeatherRepository();
-      weatherBloc = HomeBloc(repository);
+      weatherBloc = WeatherHomeBloc(repository);
     });
 
     tearDown(() {
@@ -44,30 +44,30 @@ void main() {
     });
 
     test('Initial state', () {
-      expect(weatherBloc.state, const HomeState());
+      expect(weatherBloc.state, const WeatherHomeState());
     });
 
-    blocTest<HomeBloc, HomeState>(
+    blocTest<WeatherHomeBloc, WeatherHomeState>(
       'emits correct states when UpdateLocationEvent is added',
       build: () {
         return weatherBloc;
       },
       act: (bloc) => bloc.add(const UpdateLocationEvent(dummyLat, dummyLong)),
-      expect: () => <HomeState>[
-        const HomeState(
+      expect: () => <WeatherHomeState>[
+        const WeatherHomeState(
           lat: dummyLat,
           long: dummyLong,
         ),
       ],
     );
 
-    blocTest<HomeBloc, HomeState>(
+    blocTest<WeatherHomeBloc, WeatherHomeState>(
       'emits correct states when LoadDataEvent is added without latitude and longitude',
       build: () {
         return weatherBloc;
       },
       act: (bloc) => bloc.add(const LoadDataEvent()),
-      expect: () => <HomeState>[],
+      expect: () => <WeatherHomeState>[],
       verify: (_) {
         verifyNever(() =>
             repository.loadCurrentWeather(lat: dummyLat, long: dummyLong));
@@ -76,7 +76,7 @@ void main() {
       },
     );
 
-    blocTest<HomeBloc, HomeState>(
+    blocTest<WeatherHomeBloc, WeatherHomeState>(
       'emits correct states when LoadDataEvent is added and have data',
       build: () {
         when(() =>
@@ -88,26 +88,26 @@ void main() {
         return weatherBloc..add(const UpdateLocationEvent(dummyLat, dummyLong));
       },
       act: (bloc) => bloc.add(const LoadDataEvent()),
-      expect: () => <HomeState>[
-        const HomeState(
+      expect: () => <WeatherHomeState>[
+        const WeatherHomeState(
           loading: true,
           lat: dummyLat,
           long: dummyLong,
         ),
-        const HomeState(
+        const WeatherHomeState(
           loading: true,
           lat: dummyLat,
           long: dummyLong,
           currentWeather: dummyCurrentWeather,
         ),
-        HomeState(
+        WeatherHomeState(
           loading: true,
           lat: dummyLat,
           long: dummyLong,
           currentWeather: dummyCurrentWeather,
           forecasts: getForecastsDaily(dummyForecastResponse),
         ),
-        HomeState(
+        WeatherHomeState(
           loading: false,
           lat: dummyLat,
           long: dummyLong,
@@ -124,7 +124,7 @@ void main() {
       },
     );
 
-    blocTest<HomeBloc, HomeState>(
+    blocTest<WeatherHomeBloc, WeatherHomeState>(
       'emits correct states when LoadDataEvent is added and empty data',
       build: () {
         when(() =>
@@ -137,8 +137,8 @@ void main() {
       },
       act: (bloc) => bloc.add(const LoadDataEvent()),
       expect: () => [
-        const HomeState(loading: true, lat: dummyLat, long: dummyLong),
-        const HomeState(loading: false, lat: dummyLat, long: dummyLong),
+        const WeatherHomeState(loading: true, lat: dummyLat, long: dummyLong),
+        const WeatherHomeState(loading: false, lat: dummyLat, long: dummyLong),
       ],
       verify: (_) {
         verify(() =>
@@ -149,7 +149,7 @@ void main() {
       },
     );
 
-    blocTest<HomeBloc, HomeState>(
+    blocTest<WeatherHomeBloc, WeatherHomeState>(
       'emits correct states when ReloadEvent is added',
       build: () {
         when(() =>
@@ -160,26 +160,26 @@ void main() {
         return weatherBloc..add(const UpdateLocationEvent(dummyLat, dummyLong));
       },
       act: (bloc) => bloc.add(const ReloadEvent()),
-      expect: () => <HomeState>[
-        const HomeState(
+      expect: () => <WeatherHomeState>[
+        const WeatherHomeState(
           loading: true,
           lat: dummyLat,
           long: dummyLong,
         ),
-        const HomeState(
+        const WeatherHomeState(
           loading: true,
           lat: dummyLat,
           long: dummyLong,
           currentWeather: dummyCurrentWeather,
         ),
-        HomeState(
+        WeatherHomeState(
           loading: true,
           lat: dummyLat,
           long: dummyLong,
           currentWeather: dummyCurrentWeather,
           forecasts: getForecastsDaily(dummyForecastResponse),
         ),
-        HomeState(
+        WeatherHomeState(
           loading: false,
           lat: dummyLat,
           long: dummyLong,

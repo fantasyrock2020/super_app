@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'home_state.dart';
+part of 'weather_home_state.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

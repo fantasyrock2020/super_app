@@ -7,15 +7,15 @@ import '../../../../../core/utils/utils.dart';
 import '../../../data/model/model.dart';
 
 import '../../../domain/repository/repository.dart';
-import 'home_event.dart';
-import 'home_state.dart';
+import 'weather_home_event.dart';
+import 'weather_home_state.dart';
 
-export 'home_event.dart';
-export 'home_state.dart';
+export 'weather_home_event.dart';
+export 'weather_home_state.dart';
 
 @injectable
-class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc(this._repository) : super(const HomeState()) {
+class WeatherHomeBloc extends Bloc<WeatherHomeEvent, WeatherHomeState> {
+  WeatherHomeBloc(this._repository) : super(const WeatherHomeState()) {
     on<UpdateLocationEvent>(_onUpdateLocationEvent);
     on<LoadDataEvent>(_onLoadDataEvent);
     on<ReloadEvent>(_onReload);
@@ -25,7 +25,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   FutureOr<void> _onUpdateLocationEvent(
     UpdateLocationEvent event,
-    Emitter<HomeState> emit,
+    Emitter<WeatherHomeState> emit,
   ) async {
     emit(state.copyWith(
       lat: event.latitude,
@@ -34,7 +34,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _loadCurrentWeather(
-    Emitter<HomeState> emit,
+    Emitter<WeatherHomeState> emit,
   ) async {
     final res =
         await _repository.loadCurrentWeather(lat: state.lat, long: state.long);
@@ -42,7 +42,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _loadForecast(
-    Emitter<HomeState> emit,
+    Emitter<WeatherHomeState> emit,
   ) async {
     final res =
         await _repository.loadForecast(lat: state.lat, long: state.long);
@@ -72,7 +72,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   FutureOr<void> _onLoadDataEvent(
     LoadDataEvent event,
-    Emitter<HomeState> emit,
+    Emitter<WeatherHomeState> emit,
   ) async {
     if (state.lat != 0 && state.long != 0) {
       emit(state.copyWith(
@@ -88,7 +88,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   FutureOr<void> _onReload(
     ReloadEvent event,
-    Emitter<HomeState> emit,
+    Emitter<WeatherHomeState> emit,
   ) {
     add(const LoadDataEvent());
   }

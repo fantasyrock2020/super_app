@@ -4,7 +4,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'home_state.dart';
+part of 'weather_home_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,33 +12,34 @@ part of 'home_state.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-HomeState _$HomeStateFromJson(Map<String, dynamic> json) {
+WeatherHomeState _$WeatherHomeStateFromJson(Map<String, dynamic> json) {
   return _ForecastResponse.fromJson(json);
 }
 
 /// @nodoc
-mixin _$HomeState {
+mixin _$WeatherHomeState {
   WeatherResponse? get currentWeather;
   List<Forecast> get forecasts;
   bool get loading;
   double get lat;
   double get long;
 
-  /// Create a copy of HomeState
+  /// Create a copy of WeatherHomeState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $HomeStateCopyWith<HomeState> get copyWith =>
-      _$HomeStateCopyWithImpl<HomeState>(this as HomeState, _$identity);
+  $WeatherHomeStateCopyWith<WeatherHomeState> get copyWith =>
+      _$WeatherHomeStateCopyWithImpl<WeatherHomeState>(
+          this as WeatherHomeState, _$identity);
 
-  /// Serializes this HomeState to a JSON map.
+  /// Serializes this WeatherHomeState to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is HomeState &&
+            other is WeatherHomeState &&
             (identical(other.currentWeather, currentWeather) ||
                 other.currentWeather == currentWeather) &&
             const DeepCollectionEquality().equals(other.forecasts, forecasts) &&
@@ -54,14 +55,15 @@ mixin _$HomeState {
 
   @override
   String toString() {
-    return 'HomeState(currentWeather: $currentWeather, forecasts: $forecasts, loading: $loading, lat: $lat, long: $long)';
+    return 'WeatherHomeState(currentWeather: $currentWeather, forecasts: $forecasts, loading: $loading, lat: $lat, long: $long)';
   }
 }
 
 /// @nodoc
-abstract mixin class $HomeStateCopyWith<$Res> {
-  factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) _then) =
-      _$HomeStateCopyWithImpl;
+abstract mixin class $WeatherHomeStateCopyWith<$Res> {
+  factory $WeatherHomeStateCopyWith(
+          WeatherHomeState value, $Res Function(WeatherHomeState) _then) =
+      _$WeatherHomeStateCopyWithImpl;
   @useResult
   $Res call(
       {WeatherResponse? currentWeather,
@@ -74,13 +76,14 @@ abstract mixin class $HomeStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$HomeStateCopyWithImpl<$Res> implements $HomeStateCopyWith<$Res> {
-  _$HomeStateCopyWithImpl(this._self, this._then);
+class _$WeatherHomeStateCopyWithImpl<$Res>
+    implements $WeatherHomeStateCopyWith<$Res> {
+  _$WeatherHomeStateCopyWithImpl(this._self, this._then);
 
-  final HomeState _self;
-  final $Res Function(HomeState) _then;
+  final WeatherHomeState _self;
+  final $Res Function(WeatherHomeState) _then;
 
-  /// Create a copy of HomeState
+  /// Create a copy of WeatherHomeState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -115,7 +118,7 @@ class _$HomeStateCopyWithImpl<$Res> implements $HomeStateCopyWith<$Res> {
     ));
   }
 
-  /// Create a copy of HomeState
+  /// Create a copy of WeatherHomeState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -132,7 +135,7 @@ class _$HomeStateCopyWithImpl<$Res> implements $HomeStateCopyWith<$Res> {
 
 /// @nodoc
 @JsonSerializable()
-class _ForecastResponse extends HomeState {
+class _ForecastResponse extends WeatherHomeState {
   const _ForecastResponse(
       {this.currentWeather,
       final List<Forecast> forecasts = const <Forecast>[],
@@ -165,7 +168,7 @@ class _ForecastResponse extends HomeState {
   @JsonKey()
   final double long;
 
-  /// Create a copy of HomeState
+  /// Create a copy of WeatherHomeState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -201,13 +204,13 @@ class _ForecastResponse extends HomeState {
 
   @override
   String toString() {
-    return 'HomeState(currentWeather: $currentWeather, forecasts: $forecasts, loading: $loading, lat: $lat, long: $long)';
+    return 'WeatherHomeState(currentWeather: $currentWeather, forecasts: $forecasts, loading: $loading, lat: $lat, long: $long)';
   }
 }
 
 /// @nodoc
 abstract mixin class _$ForecastResponseCopyWith<$Res>
-    implements $HomeStateCopyWith<$Res> {
+    implements $WeatherHomeStateCopyWith<$Res> {
   factory _$ForecastResponseCopyWith(
           _ForecastResponse value, $Res Function(_ForecastResponse) _then) =
       __$ForecastResponseCopyWithImpl;
@@ -232,7 +235,7 @@ class __$ForecastResponseCopyWithImpl<$Res>
   final _ForecastResponse _self;
   final $Res Function(_ForecastResponse) _then;
 
-  /// Create a copy of HomeState
+  /// Create a copy of WeatherHomeState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -267,7 +270,7 @@ class __$ForecastResponseCopyWithImpl<$Res>
     ));
   }
 
-  /// Create a copy of HomeState
+  /// Create a copy of WeatherHomeState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')

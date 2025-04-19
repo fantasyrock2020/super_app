@@ -4,7 +4,7 @@ import '../../../core/bloc/base_page_state.dart';
 import '../../../core/extensions/extensions.dart';
 
 import '../../../core/utils/utils.dart';
-import 'bloc/home/home_bloc.dart';
+import 'bloc/home/weather_home_bloc.dart';
 import 'widget/home/error.dart';
 import 'widget/home/item.dart';
 import 'widget/home/loading.dart';
@@ -18,7 +18,7 @@ class WeatherHomeScreen extends StatefulWidget {
 }
 
 class _WeatherHomeScreenState
-    extends BasePageState<WeatherHomeScreen, HomeBloc> {
+    extends BasePageState<WeatherHomeScreen, WeatherHomeBloc> {
   @override
   void initState() {
     super.initState();
@@ -41,7 +41,7 @@ class _WeatherHomeScreenState
   @override
   Widget buildPage(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<HomeBloc, HomeState>(
+      body: BlocBuilder<WeatherHomeBloc, WeatherHomeState>(
         builder: (context, state) {
           if (state.loading) {
             return const WeatherLoadingWidget();

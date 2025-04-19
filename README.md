@@ -2,7 +2,6 @@
 
 ## About
 A simple Weather Forecast Application built with **Flutter**.
-It fetches real-time weather data and displays a **beautiful animated UI**.
 
 ---
 
@@ -29,58 +28,31 @@ The project follows **Clean Architecture** principles:
 lib/
 ├── core/
 │   ├── bloc/                                       # Base classes for bloc pattern
-│   │   └── base_page_state.dart
 │   ├── config/                                     # Dependency Injection using Injectable
-│   │   ├── service_locator.dart
-│   │   └── service_locator.config.dart
-│   ├── const/                                      # Store constants of app. Ex: image, string, enum, ...
-│   │   ├── assets.dart
-│   │   └── strings.dart
-│   ├── extensions/                                 # Useful extension methods
-│   │   ├── date_time_extension.dart
-│   │   ├── double_extension.dart
-│   │   ├── extensions.dart
-│   │   └── num_extension.dart
-│   ├── network/                                    # Config dio
-│   │   └── dio_client.dart
-│   ├── route/                                      # Useful navigation
-│   │   └── route.dart
-│   └── utils/                                      # Useful utils methods
-│       ├── common_util.dart
-│       ├── device_util.dart
-│       └── utils.dart
+│   ├── const/                                      # App constants (assets, strings, ...)
+│   ├── extensions/                                 # Dart extensions (num, datetime, double, ...)
+│   ├── network/                                    # Dio client wrapper
+│   ├── route/                                      # Navigation and route settings
+│   └── utils/                                      # Common utilities
 │
 ├── features/
-│   └── weather/                                    # We can have multiple feature. Ex: weather, auth, product, ...
+│   └── weather/                                    # Each big feature of the app (weather, auth, profile, ...) has its own folder
 │       ├── data/                                   # This layer is responsible for handling data sources
-│       │   ├── model/                              # This directory likely contains model from API response
-│       │   │   ├── forecast.dart
-│       │   │   ├── model.dart
-│       │   │   └── weather.dart
-│       │   ├── remote/                             #
-│       │   │   ├── remote_data_source.dart
-│       │   │   └── remote_data_source_impl.dart
-│       │   └── repository/                         #
-│       │       └── repository.dart
-│       ├── domain/                                 #
-│       │   └── repository/                         #
-│       │       └── domain.dart
-│       └── presentation/                           #
-│           ├── bloc/
-│           │   └── home/                           #
-│           │       ├── home_bloc.dart
-│           │       ├── home_event.dart
-│           │       └── home_state.dart
-│           ├── widget/                             #
-│           │   └── home/                           #
-│           │       ├── error.dart
-│           │       ├── item.dart
-│           │       ├── loading.dart
-│           │       └── slide_animation.dart
-│           └── home.dart
-│
-├── feature.dart
-└── weather.dart
+│       │   ├── model/                              # Contains model from API response
+│       │   ├── remote/                             # Connect to APIs, databases, etc
+│       │   └── repository/                         # Concrete implementation of repository interfaces, calling datasource methods
+│       ├── domain/                                 # Contains the business logic: entities, repository interfaces, and use cases.
+│       │   └── repository/                         # Abstract classes that define all function needed
+│       └── presentation/                           # Contains the UI (screen) and logic UI
+│           ├── bloc/                               # Bloc state management
+│           ├── widget/                             # Small reusable for each screen
+│           └── screen.dart                         # Screen
+test/
+├── feature/
+│   ├── bloc/
+│   ├── dump/
+│   ├── helpers/
+│   ├── screen_test.dart
 ```
 
 ---
@@ -96,7 +68,6 @@ lib/
 | json_annotation      | JSON serialization                 |
 | injectable           | Dependency injection               |
 | get_it               | Service locator                    |
-| cupertino_icons      | iOS icons                          |
 | geolocator           | Get device GPS location            |
 
 ---

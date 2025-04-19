@@ -3,6 +3,11 @@
 ## About
 A simple Weather Forecast Application built with **Flutter**.
 
+- **Flutter version**: 3.27.2 (stable)
+- **Dart version**: 3.6.1
+- **JDK**: 17
+- **Minimum Android version support**: 5.0 Lollipop
+- **Minimum iOS version support**: iOS 11.0
 ---
 
 ## Developer
@@ -47,6 +52,7 @@ lib/
 │           ├── bloc/                               # Bloc state management
 │           ├── widget/                             # Small reusable for each screen
 │           └── screen.dart                         # Screen
+│
 test/
 ├── feature/
 │   ├── bloc/

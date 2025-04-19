@@ -1,10 +1,18 @@
-class HomeEvent {}
+class HomeEvent {
+  const HomeEvent();
+}
 
-class InitialEvent extends HomeEvent {
+class UpdateLocationEvent extends HomeEvent {
   final double latitude;
   final double longitude;
 
-  InitialEvent(this.latitude, this.longitude);
+  const UpdateLocationEvent(this.latitude, this.longitude);
 }
 
-class ReloadEvent extends HomeEvent {}
+class LoadDataEvent extends HomeEvent {
+  const LoadDataEvent();
+}
+
+class ReloadEvent extends HomeEvent {
+  const ReloadEvent();
+}

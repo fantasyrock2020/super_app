@@ -53,22 +53,101 @@ var dummyForecastResponse = ForecastResponse(
 
 var dummyForecastList = <Forecast>[
   Forecast(
-    dt: DateTime(2024, 3, 16, 12, 0, 0).millisecondsSinceEpoch,
+    dt: ((DateTime(2024, 3, 17, 12, 0, 0).millisecondsSinceEpoch) / 1000)
+        .floor(),
     main: const MainWeather(temp: 28.0, humidity: 75),
     weather: const [Weather(description: 'Sunny')],
   ),
   Forecast(
-    dt: DateTime(2024, 3, 17, 12, 0, 0).millisecondsSinceEpoch,
-    main: const MainWeather(temp: 30.0, humidity: 70),
-    weather: const [Weather(description: 'Cloudy')],
+    dt: ((DateTime(2024, 3, 17, 16, 0, 0).millisecondsSinceEpoch) / 1000)
+        .floor(),
+    main: const MainWeather(temp: 28.0, humidity: 75),
+    weather: const [Weather(description: 'Sunny')],
   ),
   Forecast(
-    dt: DateTime(2024, 3, 18, 12, 0, 0).millisecondsSinceEpoch,
+    dt: ((DateTime(2024, 3, 17, 19, 0, 0).millisecondsSinceEpoch) / 1000)
+        .floor(),
+    main: const MainWeather(temp: 28.0, humidity: 75),
+    weather: const [Weather(description: 'Sunny')],
+  ),
+  Forecast(
+    dt: ((DateTime(2024, 3, 18, 12, 0, 0).millisecondsSinceEpoch) / 1000)
+        .floor(),
     main: const MainWeather(temp: 29.0, humidity: 65),
     weather: const [Weather(description: 'Rainy')],
   ),
   Forecast(
-    dt: DateTime(2024, 3, 19, 12, 0, 0).millisecondsSinceEpoch,
+    dt: ((DateTime(2024, 3, 18, 16, 0, 0).millisecondsSinceEpoch) / 1000)
+        .floor(),
+    main: const MainWeather(temp: 29.0, humidity: 65),
+    weather: const [Weather(description: 'Rainy')],
+  ),
+  Forecast(
+    dt: ((DateTime(2024, 3, 18, 19, 0, 0).millisecondsSinceEpoch) / 1000)
+        .floor(),
+    main: const MainWeather(temp: 29.0, humidity: 65),
+    weather: const [Weather(description: 'Rainy')],
+  ),
+  Forecast(
+    dt: ((DateTime(2024, 3, 19, 12, 0, 0).millisecondsSinceEpoch) / 1000)
+        .floor(),
+    main: const MainWeather(temp: 27.0, humidity: 85),
+    weather: const [Weather(description: 'Clear')],
+  ),
+  Forecast(
+    dt: ((DateTime(2024, 3, 19, 16, 0, 0).millisecondsSinceEpoch) / 1000)
+        .floor(),
+    main: const MainWeather(temp: 27.0, humidity: 85),
+    weather: const [Weather(description: 'Clear')],
+  ),
+  Forecast(
+    dt: ((DateTime(2024, 3, 19, 19, 0, 0).millisecondsSinceEpoch) / 1000)
+        .floor(),
+    main: const MainWeather(temp: 27.0, humidity: 85),
+    weather: const [Weather(description: 'Clear')],
+  ),
+  Forecast(
+    dt: ((DateTime(2024, 3, 20, 12, 0, 0).millisecondsSinceEpoch) / 1000)
+        .floor(),
+    main: const MainWeather(temp: 27.0, humidity: 85),
+    weather: const [Weather(description: 'Clear')],
+  ),
+  Forecast(
+    dt: ((DateTime(2024, 3, 20, 16, 0, 0).millisecondsSinceEpoch) / 1000)
+        .floor(),
+    main: const MainWeather(temp: 27.0, humidity: 85),
+    weather: const [Weather(description: 'Clear')],
+  ),
+  Forecast(
+    dt: ((DateTime(2024, 3, 20, 19, 0, 0).millisecondsSinceEpoch) / 1000)
+        .floor(),
+    main: const MainWeather(temp: 27.0, humidity: 85),
+    weather: const [Weather(description: 'Clear')],
+  ),
+];
+
+var dummyForecastDailyList = <Forecast>[
+  Forecast(
+    dt: ((DateTime(2024, 3, 17, 12, 0, 0).millisecondsSinceEpoch) / 1000)
+        .floor(),
+    main: const MainWeather(temp: 28.0, humidity: 75),
+    weather: const [Weather(description: 'Sunny')],
+  ),
+  Forecast(
+    dt: ((DateTime(2024, 3, 18, 12, 0, 0).millisecondsSinceEpoch) / 1000)
+        .floor(),
+    main: const MainWeather(temp: 29.0, humidity: 65),
+    weather: const [Weather(description: 'Rainy')],
+  ),
+  Forecast(
+    dt: ((DateTime(2024, 3, 19, 12, 0, 0).millisecondsSinceEpoch) / 1000)
+        .floor(),
+    main: const MainWeather(temp: 27.0, humidity: 85),
+    weather: const [Weather(description: 'Clear')],
+  ),
+  Forecast(
+    dt: ((DateTime(2024, 3, 20, 12, 0, 0).millisecondsSinceEpoch) / 1000)
+        .floor(),
     main: const MainWeather(temp: 27.0, humidity: 85),
     weather: const [Weather(description: 'Clear')],
   ),

@@ -28,12 +28,14 @@ class _WeatherHomeScreenState
   Future<void> _onLoad() async {
     final DeviceLatLong? location = await DeviceUtil.getCurrentLatLong();
     if (location != null) {
-      bloc.add(InitialEvent(location.latitude, location.longitude));
+      bloc
+        ..add(UpdateLocationEvent(location.latitude, location.longitude))
+        ..add(const LoadDataEvent());
     }
   }
 
   void _onRetry() {
-    bloc.add(ReloadEvent());
+    bloc.add(const ReloadEvent());
   }
 
   @override

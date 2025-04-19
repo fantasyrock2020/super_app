@@ -16,26 +16,21 @@ export 'home_state.dart';
 @injectable
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc(this._repository) : super(const HomeState()) {
-    on<InitialEvent>(_onInitialEvent);
+    on<UpdateLocationEvent>(_onUpdateLocationEvent);
+    on<LoadDataEvent>(_onLoadDataEvent);
     on<ReloadEvent>(_onReload);
   }
 
   final WeatherRepository _repository;
 
-  FutureOr<void> _onInitialEvent(
-    InitialEvent event,
+  FutureOr<void> _onUpdateLocationEvent(
+    UpdateLocationEvent event,
     Emitter<HomeState> emit,
   ) async {
     emit(state.copyWith(
-      loading: true,
       lat: event.latitude,
       long: event.longitude,
     ));
-    await Future.wait([
-      _loadCurrentWeather(emit),
-      _loadForecast(emit),
-    ]);
-    emit(state.copyWith(loading: false));
   }
 
   Future<void> _loadCurrentWeather(
@@ -75,10 +70,26 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     return forcasts;
   }
 
+  FutureOr<void> _onLoadDataEvent(
+    LoadDataEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    if (state.lat != 0 && state.long != 0) {
+      emit(state.copyWith(
+        loading: true,
+      ));
+      await Future.wait([
+        _loadCurrentWeather(emit),
+        _loadForecast(emit),
+      ]);
+      emit(state.copyWith(loading: false));
+    }
+  }
+
   FutureOr<void> _onReload(
     ReloadEvent event,
     Emitter<HomeState> emit,
   ) {
-    add(InitialEvent(state.lat, state.long));
+    add(const LoadDataEvent());
   }
 }

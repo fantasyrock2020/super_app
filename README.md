@@ -67,12 +67,12 @@ lib/
 │       │       └── domain.dart
 │       └── presentation/                           #
 │           ├── bloc/
-│           │   └── home/                          #
+│           │   └── home/                           #
 │           │       ├── home_bloc.dart
 │           │       ├── home_event.dart
 │           │       └── home_state.dart
-│           ├── widget/                        #
-│           │   └── home/                          #
+│           ├── widget/                             #
+│           │   └── home/                           #
 │           │       ├── error.dart
 │           │       ├── item.dart
 │           │       ├── loading.dart

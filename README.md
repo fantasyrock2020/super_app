@@ -3,9 +3,9 @@
 ## About
 A simple Weather Forecast Application built with **Flutter**.
 
-- **Flutter version**: 3.27.2 (stable)
-- **Dart version**: 3.6.1
-- **JDK**: 17
+- **Flutter version**: 3.29.3 (stable)
+- **Dart version**: 3.7.2
+- **Java version**: Java 8
 - **Minimum Android version support**: 5.0 Lollipop
 - **Minimum iOS version support**: iOS 11.0
 ---
@@ -40,8 +40,8 @@ lib/
 │   ├── route/                                      # Navigation and route settings
 │   └── utils/                                      # Common utilities
 │
-├── features/
-│   └── weather/                                    # Each big feature of the app (weather, auth, profile, ...) has its own folder
+├── features/                                       # Each big feature of the app (weather, auth, profile, ...) has its own folder
+│   └── weather/
 │       ├── data/                                   # This layer is responsible for handling data sources
 │       │   ├── model/                              # Contains model from API response
 │       │   ├── remote/                             # Connect to APIs, databases, etc
@@ -58,7 +58,7 @@ test/
 │   ├── bloc/
 │   ├── dump/
 │   ├── helpers/
-│   ├── screen_test.dart
+│   └── screen_test.dart
 ```
 
 ---
@@ -75,6 +75,7 @@ test/
 | injectable           | Dependency injection               |
 | get_it               | Service locator                    |
 | geolocator           | Get device GPS location            |
+| go_router            | Routing and navigation             |
 
 ---
 

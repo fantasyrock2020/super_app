@@ -1,12 +1,10 @@
 import 'package:geolocator/geolocator.dart';
 
-abstract class ILocationService {
-  Future<DeviceLatLong?> getCurrentLocation();
-  Future<bool> checkLocationPermission();
-}
+class LocationUtil {
+  const LocationUtil._();
 
-class LocationService implements ILocationService {
-  @override
+  static LocationUtil instance = const LocationUtil._();
+
   Future<bool> checkLocationPermission() async {
     final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -24,7 +22,6 @@ class LocationService implements ILocationService {
     ].contains(permission);
   }
 
-  @override
   Future<DeviceLatLong?> getCurrentLocation() async {
     if (!await checkLocationPermission()) {
       return null;

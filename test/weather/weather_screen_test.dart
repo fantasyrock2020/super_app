@@ -14,9 +14,10 @@ import 'dump/dump.dart';
 
 void main() {
   group('WeatherScreen', () {
-    final WeatherHomeBloc weatherHomeBloc = MockWeatherHomeBloc();
+    late WeatherHomeBloc weatherHomeBloc;
 
     setUp(() {
+      weatherHomeBloc = MockWeatherHomeBloc();
       GetIt.instance.registerFactory(() => weatherHomeBloc);
       when(
         () => weatherHomeBloc.stream,

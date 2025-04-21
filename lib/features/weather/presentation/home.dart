@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/bloc/base_page_state.dart';
 import '../../../core/extensions/extensions.dart';
 
-import '../../../core/services/services.dart';
+import '../../../core/utils/utils.dart';
 import 'bloc/home/weather_home_bloc.dart';
 import 'widget/home/error.dart';
 import 'widget/home/item.dart';
@@ -19,7 +19,6 @@ class WeatherHomeScreen extends StatefulWidget {
 
 class _WeatherHomeScreenState
     extends BasePageState<WeatherHomeScreen, WeatherHomeBloc> {
-  final ILocationService _locationService = LocationService();
   DeviceLatLong? location;
 
   @override
@@ -30,7 +29,7 @@ class _WeatherHomeScreenState
 
   Future<void> _onLoad() async {
     bloc.add(const UpdateLoadingStatusEvent(true));
-    location ??= await _locationService.getCurrentLocation();
+    location ??= await LocationUtil.instance.getCurrentLocation();
     bloc
       ..add(UpdateLocationEvent(location?.latitude, location?.longitude))
       ..add(const LoadDataEvent());

@@ -12,17 +12,14 @@ part of 'weather_home_state.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-WeatherHomeState _$WeatherHomeStateFromJson(Map<String, dynamic> json) {
-  return _ForecastResponse.fromJson(json);
-}
 
 /// @nodoc
 mixin _$WeatherHomeState {
   WeatherResponse? get currentWeather;
   List<Forecast> get forecasts;
   bool get loading;
-  double get lat;
-  double get long;
+  double? get lat;
+  double? get long;
 
   /// Create a copy of WeatherHomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -69,8 +66,8 @@ abstract mixin class $WeatherHomeStateCopyWith<$Res> {
       {WeatherResponse? currentWeather,
       List<Forecast> forecasts,
       bool loading,
-      double lat,
-      double long});
+      double? lat,
+      double? long});
 
   $WeatherResponseCopyWith<$Res>? get currentWeather;
 }
@@ -91,8 +88,8 @@ class _$WeatherHomeStateCopyWithImpl<$Res>
     Object? currentWeather = freezed,
     Object? forecasts = null,
     Object? loading = null,
-    Object? lat = null,
-    Object? long = null,
+    Object? lat = freezed,
+    Object? long = freezed,
   }) {
     return _then(_self.copyWith(
       currentWeather: freezed == currentWeather
@@ -107,14 +104,14 @@ class _$WeatherHomeStateCopyWithImpl<$Res>
           ? _self.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as bool,
-      lat: null == lat
+      lat: freezed == lat
           ? _self.lat
           : lat // ignore: cast_nullable_to_non_nullable
-              as double,
-      long: null == long
+              as double?,
+      long: freezed == long
           ? _self.long
           : long // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ));
   }
 
@@ -135,17 +132,17 @@ class _$WeatherHomeStateCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _ForecastResponse extends WeatherHomeState {
-  const _ForecastResponse(
+class _WeatherHomeState extends WeatherHomeState {
+  const _WeatherHomeState(
       {this.currentWeather,
       final List<Forecast> forecasts = const <Forecast>[],
       this.loading = true,
-      this.lat = 0,
-      this.long = 0})
+      this.lat,
+      this.long})
       : _forecasts = forecasts,
         super._();
-  factory _ForecastResponse.fromJson(Map<String, dynamic> json) =>
-      _$ForecastResponseFromJson(json);
+  factory _WeatherHomeState.fromJson(Map<String, dynamic> json) =>
+      _$WeatherHomeStateFromJson(json);
 
   @override
   final WeatherResponse? currentWeather;
@@ -162,23 +159,21 @@ class _ForecastResponse extends WeatherHomeState {
   @JsonKey()
   final bool loading;
   @override
-  @JsonKey()
-  final double lat;
+  final double? lat;
   @override
-  @JsonKey()
-  final double long;
+  final double? long;
 
   /// Create a copy of WeatherHomeState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ForecastResponseCopyWith<_ForecastResponse> get copyWith =>
-      __$ForecastResponseCopyWithImpl<_ForecastResponse>(this, _$identity);
+  _$WeatherHomeStateCopyWith<_WeatherHomeState> get copyWith =>
+      __$WeatherHomeStateCopyWithImpl<_WeatherHomeState>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$ForecastResponseToJson(
+    return _$WeatherHomeStateToJson(
       this,
     );
   }
@@ -187,7 +182,7 @@ class _ForecastResponse extends WeatherHomeState {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ForecastResponse &&
+            other is _WeatherHomeState &&
             (identical(other.currentWeather, currentWeather) ||
                 other.currentWeather == currentWeather) &&
             const DeepCollectionEquality()
@@ -209,31 +204,31 @@ class _ForecastResponse extends WeatherHomeState {
 }
 
 /// @nodoc
-abstract mixin class _$ForecastResponseCopyWith<$Res>
+abstract mixin class _$WeatherHomeStateCopyWith<$Res>
     implements $WeatherHomeStateCopyWith<$Res> {
-  factory _$ForecastResponseCopyWith(
-          _ForecastResponse value, $Res Function(_ForecastResponse) _then) =
-      __$ForecastResponseCopyWithImpl;
+  factory _$WeatherHomeStateCopyWith(
+          _WeatherHomeState value, $Res Function(_WeatherHomeState) _then) =
+      __$WeatherHomeStateCopyWithImpl;
   @override
   @useResult
   $Res call(
       {WeatherResponse? currentWeather,
       List<Forecast> forecasts,
       bool loading,
-      double lat,
-      double long});
+      double? lat,
+      double? long});
 
   @override
   $WeatherResponseCopyWith<$Res>? get currentWeather;
 }
 
 /// @nodoc
-class __$ForecastResponseCopyWithImpl<$Res>
-    implements _$ForecastResponseCopyWith<$Res> {
-  __$ForecastResponseCopyWithImpl(this._self, this._then);
+class __$WeatherHomeStateCopyWithImpl<$Res>
+    implements _$WeatherHomeStateCopyWith<$Res> {
+  __$WeatherHomeStateCopyWithImpl(this._self, this._then);
 
-  final _ForecastResponse _self;
-  final $Res Function(_ForecastResponse) _then;
+  final _WeatherHomeState _self;
+  final $Res Function(_WeatherHomeState) _then;
 
   /// Create a copy of WeatherHomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -243,10 +238,10 @@ class __$ForecastResponseCopyWithImpl<$Res>
     Object? currentWeather = freezed,
     Object? forecasts = null,
     Object? loading = null,
-    Object? lat = null,
-    Object? long = null,
+    Object? lat = freezed,
+    Object? long = freezed,
   }) {
-    return _then(_ForecastResponse(
+    return _then(_WeatherHomeState(
       currentWeather: freezed == currentWeather
           ? _self.currentWeather
           : currentWeather // ignore: cast_nullable_to_non_nullable
@@ -259,14 +254,14 @@ class __$ForecastResponseCopyWithImpl<$Res>
           ? _self.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as bool,
-      lat: null == lat
+      lat: freezed == lat
           ? _self.lat
           : lat // ignore: cast_nullable_to_non_nullable
-              as double,
-      long: null == long
+              as double?,
+      long: freezed == long
           ? _self.long
           : long // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
     ));
   }
 

@@ -13,9 +13,9 @@ abstract class WeatherHomeState with _$WeatherHomeState {
     WeatherResponse? currentWeather,
     @Default(<Forecast>[]) List<Forecast> forecasts,
     @Default(true) bool loading,
-    @Default(0) double lat,
-    @Default(0) double long,
-  }) = _ForecastResponse;
+    double? lat,
+    double? long,
+  }) = _WeatherHomeState;
 
   factory WeatherHomeState.fromJson(Map<String, dynamic> json) =>
       _$WeatherHomeStateFromJson(json);

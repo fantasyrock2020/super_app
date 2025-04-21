@@ -18,7 +18,7 @@ class WeatherHomeBloc extends Bloc<WeatherHomeEvent, WeatherHomeState> {
   WeatherHomeBloc(this._repository) : super(const WeatherHomeState()) {
     on<UpdateLocationEvent>(_onUpdateLocationEvent);
     on<LoadDataEvent>(_onLoadDataEvent);
-    on<ReloadEvent>(_onReload);
+    on<UpdateLoadingStatusEvent>(_onUpdateLoadingStatus);
   }
 
   final WeatherRepository _repository;
@@ -36,16 +36,20 @@ class WeatherHomeBloc extends Bloc<WeatherHomeEvent, WeatherHomeState> {
   Future<void> _loadCurrentWeather(
     Emitter<WeatherHomeState> emit,
   ) async {
-    final res =
-        await _repository.loadCurrentWeather(lat: state.lat, long: state.long);
+    final res = await _repository.loadCurrentWeather(
+      lat: state.lat!,
+      long: state.long!,
+    );
     emit(state.copyWith(currentWeather: res));
   }
 
   Future<void> _loadForecast(
     Emitter<WeatherHomeState> emit,
   ) async {
-    final res =
-        await _repository.loadForecast(lat: state.lat, long: state.long);
+    final res = await _repository.loadForecast(
+      lat: state.lat!,
+      long: state.long!,
+    );
     if (res != null) {
       emit(state.copyWith(forecasts: _getForecastsDaily(res.list)));
     }
@@ -74,22 +78,19 @@ class WeatherHomeBloc extends Bloc<WeatherHomeEvent, WeatherHomeState> {
     LoadDataEvent event,
     Emitter<WeatherHomeState> emit,
   ) async {
-    if (state.lat != 0 && state.long != 0) {
-      emit(state.copyWith(
-        loading: true,
-      ));
+    if (state.lat != null && state.long != null) {
       await Future.wait([
         _loadCurrentWeather(emit),
         _loadForecast(emit),
       ]);
-      emit(state.copyWith(loading: false));
     }
+    add(const UpdateLoadingStatusEvent(false));
   }
 
-  FutureOr<void> _onReload(
-    ReloadEvent event,
+  FutureOr<void> _onUpdateLoadingStatus(
+    UpdateLoadingStatusEvent event,
     Emitter<WeatherHomeState> emit,
   ) {
-    add(const LoadDataEvent());
+    emit(state.copyWith(loading: event.value));
   }
 }

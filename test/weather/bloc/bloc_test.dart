@@ -48,6 +48,22 @@ void main() {
     });
 
     blocTest<WeatherHomeBloc, WeatherHomeState>(
+      'emits correct states when UpdateLoadingStatusEvent is added',
+      build: () {
+        return weatherBloc;
+      },
+      act: (bloc) {
+        bloc
+          ..add(const UpdateLoadingStatusEvent(true))
+          ..add(const UpdateLoadingStatusEvent(false));
+      },
+      expect: () => <WeatherHomeState>[
+        const WeatherHomeState(loading: true),
+        const WeatherHomeState(loading: false),
+      ],
+    );
+
+    blocTest<WeatherHomeBloc, WeatherHomeState>(
       'emits correct states when UpdateLocationEvent is added',
       build: () {
         return weatherBloc;
@@ -67,7 +83,15 @@ void main() {
         return weatherBloc;
       },
       act: (bloc) => bloc.add(const LoadDataEvent()),
-      expect: () => <WeatherHomeState>[],
+      expect: () => <WeatherHomeState>[
+        const WeatherHomeState(
+          currentWeather: null,
+          forecasts: [],
+          loading: false,
+          lat: null,
+          long: null,
+        ),
+      ],
       verify: (_) {
         verifyNever(() =>
             repository.loadCurrentWeather(lat: dummyLat, long: dummyLong));
@@ -77,7 +101,7 @@ void main() {
     );
 
     blocTest<WeatherHomeBloc, WeatherHomeState>(
-      'emits correct states when LoadDataEvent is added and have data',
+      'emits correct states when LoadDataEvent is added with full data',
       build: () {
         when(() =>
                 repository.loadCurrentWeather(lat: dummyLat, long: dummyLong))
@@ -125,7 +149,7 @@ void main() {
     );
 
     blocTest<WeatherHomeBloc, WeatherHomeState>(
-      'emits correct states when LoadDataEvent is added and empty data',
+      'emits correct states when LoadDataEvent is added with response empty data',
       build: () {
         when(() =>
                 repository.loadCurrentWeather(lat: dummyLat, long: dummyLong))
@@ -139,53 +163,6 @@ void main() {
       expect: () => [
         const WeatherHomeState(loading: true, lat: dummyLat, long: dummyLong),
         const WeatherHomeState(loading: false, lat: dummyLat, long: dummyLong),
-      ],
-      verify: (_) {
-        verify(() =>
-                repository.loadCurrentWeather(lat: dummyLat, long: dummyLong))
-            .called(1);
-        verify(() => repository.loadForecast(lat: dummyLat, long: dummyLong))
-            .called(1);
-      },
-    );
-
-    blocTest<WeatherHomeBloc, WeatherHomeState>(
-      'emits correct states when ReloadEvent is added',
-      build: () {
-        when(() =>
-                repository.loadCurrentWeather(lat: dummyLat, long: dummyLong))
-            .thenAnswer((_) async => dummyCurrentWeather);
-        when(() => repository.loadForecast(lat: dummyLat, long: dummyLong))
-            .thenAnswer((_) async => dummyForecastResponse);
-        return weatherBloc..add(const UpdateLocationEvent(dummyLat, dummyLong));
-      },
-      act: (bloc) => bloc.add(const ReloadEvent()),
-      expect: () => <WeatherHomeState>[
-        const WeatherHomeState(
-          loading: true,
-          lat: dummyLat,
-          long: dummyLong,
-        ),
-        const WeatherHomeState(
-          loading: true,
-          lat: dummyLat,
-          long: dummyLong,
-          currentWeather: dummyCurrentWeather,
-        ),
-        WeatherHomeState(
-          loading: true,
-          lat: dummyLat,
-          long: dummyLong,
-          currentWeather: dummyCurrentWeather,
-          forecasts: getForecastsDaily(dummyForecastResponse),
-        ),
-        WeatherHomeState(
-          loading: false,
-          lat: dummyLat,
-          long: dummyLong,
-          currentWeather: dummyCurrentWeather,
-          forecasts: getForecastsDaily(dummyForecastResponse),
-        ),
       ],
       verify: (_) {
         verify(() =>

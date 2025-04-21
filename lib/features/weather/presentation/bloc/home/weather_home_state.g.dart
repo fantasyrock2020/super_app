@@ -6,8 +6,8 @@ part of 'weather_home_state.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_ForecastResponse _$ForecastResponseFromJson(Map<String, dynamic> json) =>
-    _ForecastResponse(
+_WeatherHomeState _$WeatherHomeStateFromJson(Map<String, dynamic> json) =>
+    _WeatherHomeState(
       currentWeather: json['currentWeather'] == null
           ? null
           : WeatherResponse.fromJson(
@@ -17,16 +17,16 @@ _ForecastResponse _$ForecastResponseFromJson(Map<String, dynamic> json) =>
               .toList() ??
           const <Forecast>[],
       loading: json['loading'] as bool? ?? true,
-      lat: (json['lat'] as num?)?.toDouble() ?? 0,
-      long: (json['long'] as num?)?.toDouble() ?? 0,
+      lat: (json['lat'] as num?)?.toDouble(),
+      long: (json['long'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$ForecastResponseToJson(_ForecastResponse instance) =>
+Map<String, dynamic> _$WeatherHomeStateToJson(_WeatherHomeState instance) =>
     <String, dynamic>{
       if (instance.currentWeather?.toJson() case final value?)
         'currentWeather': value,
       'forecasts': instance.forecasts.map((e) => e.toJson()).toList(),
       'loading': instance.loading,
-      'lat': instance.lat,
-      'long': instance.long,
+      if (instance.lat case final value?) 'lat': value,
+      if (instance.long case final value?) 'long': value,
     };

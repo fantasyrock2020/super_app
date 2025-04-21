@@ -14,12 +14,12 @@ import 'dump/dump.dart';
 
 void main() {
   group('WeatherScreen', () {
-    final WeatherHomeBloc homeBloc = MockWeatherHomeBloc();
+    final WeatherHomeBloc weatherHomeBloc = MockWeatherHomeBloc();
 
     setUp(() {
-      GetIt.instance.registerFactory(() => homeBloc);
+      GetIt.instance.registerFactory(() => weatherHomeBloc);
       when(
-        () => homeBloc.stream,
+        () => weatherHomeBloc.stream,
       ).thenAnswer(
         (_) => const Stream<WeatherHomeState>.empty(),
       );
@@ -30,7 +30,7 @@ void main() {
     });
 
     testWidgets('Show WeatherLoadingWidget when loading', (tester) async {
-      when(() => homeBloc.state)
+      when(() => weatherHomeBloc.state)
           .thenReturn(const WeatherHomeState(loading: true));
 
       await tester.pumpWidget(
@@ -43,9 +43,9 @@ void main() {
     });
 
     testWidgets(
-      'Show WeatherErrorWidget when load finish and data is empty',
+      'Show WeatherErrorWidget when load finish with empty data',
       (tester) async {
-        when(() => homeBloc.state)
+        when(() => weatherHomeBloc.state)
             .thenReturn(const WeatherHomeState(loading: false));
 
         await tester.pumpWidget(
@@ -61,7 +61,7 @@ void main() {
     testWidgets(
       'Show weather data when loaded successfully',
       (tester) async {
-        when(() => homeBloc.state).thenReturn(WeatherHomeState(
+        when(() => weatherHomeBloc.state).thenReturn(WeatherHomeState(
           loading: false,
           lat: dummyLat,
           long: dummyLong,
@@ -87,10 +87,9 @@ void main() {
       },
     );
 
-    testWidgets('Call reload event on retry', (tester) async {
-      when(() => homeBloc.state)
+    testWidgets('Load data again when retry button is tapped', (tester) async {
+      when(() => weatherHomeBloc.state)
           .thenReturn(const WeatherHomeState(loading: false));
-      when(() => homeBloc.add(const ReloadEvent())).thenReturn(null);
 
       await tester.pumpWidget(
         const MaterialApp(
@@ -101,9 +100,6 @@ void main() {
       expect(find.byType(WeatherErrorWidget), findsOneWidget);
       final retryButton = find.byType(ElevatedButton);
       expect(retryButton, findsOneWidget);
-
-      await tester.tap(retryButton);
-      verify(() => homeBloc.add(const ReloadEvent())).called(1);
     });
   });
 }

@@ -8,6 +8,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.black,
+    statusBarBrightness: Brightness.dark,
+    statusBarIconBrightness: Brightness.light,
   ));
   await configureInjection();
   runApp(const MyApp());

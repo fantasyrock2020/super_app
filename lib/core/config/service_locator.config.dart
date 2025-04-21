@@ -34,7 +34,7 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i631.DioClient>(() => _i631.DioClient());
+    gh.lazySingleton<_i631.DioClient>(() => _i631.DioClient());
     gh.lazySingleton<_i292.WeatherRemoteDataSource>(
         () => _i152.WeatherRemoteDataSourceImpl(gh<_i631.DioClient>()));
     gh.lazySingleton<_i299.WeatherRepository>(

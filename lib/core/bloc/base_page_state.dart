@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
+
+import '../config/service_locator.dart';
 
 /// Base config for StatefulWidget
 ///
@@ -28,7 +29,7 @@ abstract class BasePageState<W extends StatefulWidget,
 abstract class BasePageStateDelegate<W extends StatefulWidget,
     B extends Bloc<dynamic, dynamic>> extends State<W> {
   /// This is Bloc get from GetIt
-  late final B bloc = GetIt.instance.get<B>();
+  final B bloc = getIt<B>();
 
   @override
   Widget build(BuildContext context) {
